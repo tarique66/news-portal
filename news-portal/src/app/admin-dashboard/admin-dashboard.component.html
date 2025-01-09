@@ -1,0 +1,51 @@
+<div class="admin-dashboard container">
+  <h2 class="admin-title">Article Management</h2>
+  <button class="btn btn-primary" (click)="createArticle()">Create New Article</button>
+  <div class="article-management">
+    <div class="news-grid">
+      <div class="card" *ngFor="let article of articles">
+        <div class="card__body">
+          <img [src]="article.image_url" alt="{{ article.title }}" class="article-image">
+          <h4>{{ article.title }}</h4>
+          <p>{{ getCategoryName(article.category_id) }}</p>
+          <div class="card__footer">
+            <button class="btn btn-primary" (click)="selectArticle(article)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteArticle(article.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedArticle" class="card" #editForm>
+      <div class="card__body">
+        <h3>{{ selectedArticle!.id === 0 ? 'Create' : 'Edit' }} Article</h3>
+        <form (ngSubmit)="saveArticle()">
+          <label>
+            Title:
+            <input [(ngModel)]="selectedArticle!.title" name="title" required>
+          </label>
+          <label>
+            Content:
+            <textarea [(ngModel)]="selectedArticle!.content" name="content" required></textarea>
+          </label>
+          <label>
+            Category:
+            <select [(ngModel)]="selectedArticle!.category_id" name="category_id" required>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </label>
+          <label>
+            Image URL:
+            <input [(ngModel)]="selectedArticle!.image_url" name="image_url">
+          </label>
+          <label>
+            Publish Date:
+            <input [(ngModel)]="selectedArticle!.publish_date" name="publish_date" type="datetime-local" required>
+          </label>
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-secondary" type="button" (click)="selectedArticle = null">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

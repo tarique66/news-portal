@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="filters">
+    <button (click)="filterByCategory(null)" class="filter-btn">All</button>
+    <button *ngFor="let category of categories" 
+            (click)="filterByCategory(category.id)" 
+            class="filter-btn">
+      {{category.name}}
+    </button>
+    <input type="text" placeholder="Search..." (input)="onSearchChange($event)" class="search-input">
+    <input type="date" 
+    (change)="filterByDate($event)"
+    class="date-filter"
+    [max]="currentDate"
+    placeholder="Filter by date">
+  </div>
+
+  <div class="news-grid">
+    <div class="card" *ngFor="let article of filteredArticles">
+      <div class="card__header">
+        <img [src]="article.image_url || 'assets/images/default-news.jpg'" 
+             [alt]="article.title" 
+             class="card__image">
+      </div>
+      <div class="card__body">
+        <span class="tag" [ngClass]="'tag-' + getCategoryName(article.category_id).toLowerCase()">
+          {{getCategoryName(article.category_id)}}
+        </span>
+        <h4>{{article.title}}</h4>
+        <p>{{article.content | slice:0:150}}...</p>
+      </div>
+      <div class="card__footer">
+        <div class="user__info">
+          <small>Published: {{article.publish_date | date}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<header class="header">
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-left">
+        <a routerLink="/" class="logo">News Portal</a>
+        <div class="nav-links">
+          <a routerLink="/news" routerLinkActive="active">News</a>
+          <ng-container *ngIf="isLoggedIn">
+            <a routerLink="/admin-dashboard" routerLinkActive="active">Dashboard</a>
+          </ng-container>
+        </div>
+      </div>
+      <div class="nav-right">
+        <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+          <a routerLink="/login" class="login-btn">Login</a>
+          <a routerLink="/register" class="register-btn">Register</a>
+        </ng-container>
+        <ng-template #loggedInTemplate>
+          <button (click)="logout()" class="logout-btn">Logout</button>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+</header>
